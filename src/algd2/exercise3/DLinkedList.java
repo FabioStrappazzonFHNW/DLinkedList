@@ -4,6 +4,15 @@ import java.util.AbstractList;
 import java.util.List;
 
 public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
+	
+	private int size = 0;
+	public class Element<E>{
+		public Element<E> prev;
+		public Element<E> next;
+		public E e;
+	}
+	private Element<E> head;
+	private Element<E> tail;
 
 	@Override
 	public boolean checkMembership(ListItem item) {
@@ -13,38 +22,32 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public ListItem head() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ListItem<E>(head);
 	}
 
 	@Override
 	public ListItem tail() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ListItem<E>(tail);
 	}
 
 	@Override
 	public ListItem next(ListItem item) {
-		// TODO Auto-generated method stub
-		return null;
+		return item.getNext();
 	}
 
 	@Override
 	public ListItem previous(ListItem item) {
-		// TODO Auto-generated method stub
-		return null;
+		return item.getPrevious();
 	}
 
 	@Override
 	public ListItem cyclicNext(ListItem item) {
-		// TODO Auto-generated method stub
-		return null;
+		return item.getNext() != null ? item.getNext() : head();
 	}
 
 	@Override
 	public ListItem cyclicPrevious(ListItem item) {
-		// TODO Auto-generated method stub
-		return null;
+		return item.getPrevious() != null ? item.getPrevious() : tail();
 	}
 
 	@Override
@@ -61,8 +64,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public E get(ListItem item) {
-		// TODO Auto-generated method stub
-		return null;
+		return (E) item.get();
 	}
 
 	@Override
@@ -76,17 +78,31 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override 
+	public boolean add(E data){
+		addTail(data);
+		return true;
+	}
 
 	@Override
-	public ListItem addHead(E data) {
-		// TODO Auto-generated method stub
-		return null;
+	public ListItem<E> addHead(E data) {
+		Element<E> newE = new Element<>();
+		newE.e = data;
+		newE.next = head;
+		head = newE;
+		size++;
+		return new ListItem<E>(head);
 	}
 
 	@Override
 	public ListItem addTail(E data) {
-		// TODO Auto-generated method stub
-		return null;
+		Element<E> newE = new Element<>();
+		newE.e = data;
+		newE.prev = tail;
+		tail = newE;
+		size++;
+		return new ListItem<E>(tail);
 	}
 
 	@Override
@@ -175,8 +191,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}
 
 	
