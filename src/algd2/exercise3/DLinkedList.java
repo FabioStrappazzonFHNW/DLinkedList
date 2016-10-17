@@ -216,19 +216,21 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public IListIterator<E> listIterator() {
-		return new DLinkedListIterator<E>();
-		return null;
+		return new DLinkedListIterator<E>(new ListItem<E>(head), this);
 	}
 
 	@Override
 	public IListIterator<E> listIterator(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		return new DLinkedListIterator<E>(new ListItem<E>(getEl(index)), this);
 	}
 
 	public E get(int index) {
+		return getEl(index).e;
+	}
+	
+	private Element<E> getEl(int index){
 		int i;
-		Element elem;
+		Element<E> elem;
 		if(index <= size/2) {
 			i = 0;
 			elem = head;
@@ -244,14 +246,11 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 				i--;
 			}
 		}
-		return (E) elem.e;
+		return elem;
 	}
 
 	@Override
 	public int size() {
 		return size;
 	}
-
-	
-
 }
