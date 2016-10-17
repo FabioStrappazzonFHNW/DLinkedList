@@ -185,8 +185,13 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public void reverse() {
-		
-		
+		Element<E> current = head;
+		while(current != tail){
+			Element<E> tmp = current.next;
+			current.next = current.prev;
+			current.prev = tmp;
+			current = tmp;
+		}
 	}
 
 	@Override
@@ -210,7 +215,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 			item = new ListItem<E>(tail);
 		}
 		for(E el : list) {
-			item = item.linkInAfter(new Element(el));
+			item = item.linkInAfter(new Element<E>(el));
 		}
 		if(!after) {
 			item.linkInAfter(head);
