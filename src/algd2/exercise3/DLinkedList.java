@@ -284,8 +284,12 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public IList<E> remove(ListItem startInclusive, ListItem endExclusive) {
-		// TODO Auto-generated method stub
-		return null;
+		DLinkedList<E> l = new DLinkedList<>();
+		while(!startInclusive.equals(endExclusive)&&startInclusive != null){
+			l.addTail((E)startInclusive.get());
+			startInclusive = delete(startInclusive, true);
+		}
+		return l;
 	}
 
 	@Override
