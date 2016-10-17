@@ -2,7 +2,6 @@ package algd2.exercise3;
 
 import java.util.AbstractList;
 import java.util.List;
-import java.util.ListIterator;
 
 public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 	
@@ -141,7 +140,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 			Element<E> newE = new Element<>(data);
 			item.linkInAfter(newE);
 			size++;
-			return new ListItem(newE);
+			return new ListItem<E>(newE);
 		}
 	}
 
@@ -153,7 +152,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 			Element<E> newE = new Element<>(data);
 			item.linkInBefore(newE);
 			size++;
-			return new ListItem(newE);
+			return new ListItem<E>(newE);
 		}
 	}
 
