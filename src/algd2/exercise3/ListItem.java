@@ -45,18 +45,18 @@ public class ListItem<E> {
 	}
 
 	public E delete() {
-		if (element.prev == null){
-			DLinkedList<E>.Element<E> next = element.next;
-			next.prev = null;
-		} else if (element.next == null) {
-			DLinkedList<E>.Element<E> prev = element.prev;
-			prev.next = null;
-		} else {
+		if (element.prev != null && element.next != null) {
 			DLinkedList<E>.Element<E> prev = element.prev;
 			DLinkedList<E>.Element<E> next = element.next;
 			prev.next = next;
 			next.prev = prev;
-		}
+		} else if (element.prev != null) {
+			DLinkedList<E>.Element<E> prev = element.prev;
+			prev.next = null;
+		} else if (element.next != null){
+			DLinkedList<E>.Element<E> next = element.next;
+			next.prev = null;
+	}
 		return element.e;
 	}
 }
