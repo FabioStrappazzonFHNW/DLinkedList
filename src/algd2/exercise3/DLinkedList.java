@@ -226,7 +226,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	public E get(int index) {
 		int i;
-		Element elem;
+		Element<E> elem;
 		if(index <= size/2) {
 			i = 0;
 			elem = head;
