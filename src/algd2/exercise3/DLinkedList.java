@@ -182,8 +182,8 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public void rotate(ListItem item) {
-		// TODO Auto-generated method stub
-		
+		Element<E> segment = head;
+		head = item.get();
 	}
 
 	@Override
@@ -251,7 +251,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public void addAfter(ListItem item, List<E> list) {
-		for(Element<E> el = list.remove(0); !list.isEmpty(); el = list.remove(0)) {
+		for(E el = list.remove(0); !list.isEmpty(); el = list.remove(0)) {
 			item.linkInAfter(new Element<E>(el));
 		}
 		size += list.size();
@@ -259,7 +259,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public void addBefore(ListItem item, List<E> list) {
-		for(Element<E> el = list.remove(0); !list.isEmpty(); el = list.remove(0)) {
+		for(E el = list.remove(0); !list.isEmpty(); el = list.remove(0)) {
 			item.linkInBefore(new Element<E>(el));
 		}
 		size += list.size();
