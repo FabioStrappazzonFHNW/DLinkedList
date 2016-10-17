@@ -58,13 +58,10 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public ListItem<E> delete(ListItem item, boolean next) {
-		if (size <= 1) {
-			head = null;
-			tail = null;
-		} else if (item.get() == head) {
-			head = (Element<E>) item.getNext().get();
-		} else if (item.get() == tail) {
-		 	tail = (Element<E>) item.getPrevious().get();
+		if (item.getPrevious() == null) {
+			head = head.next;
+		} else if (item.getNext() == null) {
+		 	tail = tail.prev;
 		}
 		ListItem<E> value;
 		if (next) {
@@ -79,10 +76,10 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public ListItem<E> cyclicDelete(ListItem item, boolean next) {
-		if (item.get() == head) {
-			head = (Element<E>) item.getNext().get();
-		} else if (item.get() == tail) {
-			tail = (Element<E>) item.getPrevious().get();
+		if (item.getPrevious() == null) {
+			head = head.next;
+		} else if (item.getNext() == null) {
+			tail = tail.prev;
 		}
 		ListItem<E> value;
 		if (next) {
@@ -91,8 +88,11 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 			value = cyclicPrevious(item);
 		}
 		item.delete();
-		size--;
-		return value;
+		if (--size > 0) {
+			return value;
+		} else {
+			return null;
+		}
 	}
 
 	@Override
