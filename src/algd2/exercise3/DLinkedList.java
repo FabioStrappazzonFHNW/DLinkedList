@@ -204,8 +204,19 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public void conc(List<E> list, boolean after) {
-		// TODO Auto-generated method stub
-		
+		ListItem<E> item;
+		if(!after) {
+			item = new ListItem<E>(new Element<E>(list.remove(0)));
+		} else {
+			item = new ListItem<E>(tail);
+		}
+		for(E el : list) {
+			item = item.linkInAfter(new Element(el));
+		}
+		if(!after) {
+			item.linkInAfter(head);
+		}
+		size += list.size();
 	}
 
 	@Override
