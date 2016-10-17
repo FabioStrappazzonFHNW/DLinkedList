@@ -61,4 +61,14 @@ public class ListItem<E> {
 	}
 		return element.e;
 	}
+	
+	public boolean equals(ListItem other){
+		if(other == null){
+			return false;
+		}
+		if(this == other){
+			return true;
+		}
+		return element == other.element;
+	}
 }

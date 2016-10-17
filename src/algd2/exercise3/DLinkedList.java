@@ -182,8 +182,8 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public void rotate(ListItem item) {
-		// TODO Auto-generated method stub
-		
+		Element<E> segment = head;
+		head = item.get();
 	}
 
 	@Override
@@ -251,14 +251,18 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public void addAfter(ListItem item, List<E> list) {
-		// TODO Auto-generated method stub
-		
+		for(E el = list.remove(0); !list.isEmpty(); el = list.remove(0)) {
+			item.linkInAfter(new Element<E>(el));
+		}
+		size += list.size();
 	}
 
 	@Override
 	public void addBefore(ListItem item, List<E> list) {
-		// TODO Auto-generated method stub
-		
+		for(E el = list.remove(0); !list.isEmpty(); el = list.remove(0)) {
+			item.linkInBefore(new Element<E>(el));
+		}
+		size += list.size();
 	}
 
 	@Override
@@ -269,7 +273,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 		} else {
 			item = new ListItem<E>(tail);
 		}
-		for(E el : list) {
+		for(Element<E> el = list.remove(0); !list.isEmpty(); el = list.remove(0)) {
 			item = item.linkInAfter(new Element<E>(el));
 		}
 		if(!after) {
@@ -280,8 +284,12 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public IList<E> remove(ListItem startInclusive, ListItem endExclusive) {
-		// TODO Auto-generated method stub
-		return null;
+		DLinkedList<E> l = new DLinkedList<>();
+		while(!startInclusive.equals(endExclusive)&&startInclusive != null){
+			l.addTail((E)startInclusive.get());
+			startInclusive = delete(startInclusive, true);
+		}
+		return l;
 	}
 
 	@Override
