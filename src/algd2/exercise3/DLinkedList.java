@@ -2,6 +2,7 @@ package algd2.exercise3;
 
 import java.util.AbstractList;
 import java.util.List;
+import java.util.ListIterator;
 
 public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 	
@@ -63,7 +64,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 		} else if (item.get() == tail) {
 		 	tail = (Element<E>) item.getNext().get();
 		}
-		ListItem value;
+		ListItem<E> value;
 		if (next) {
 			value = item.getNext();
 		} else {
@@ -158,7 +159,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public void moveToHead(ListItem item) {
-		Element<E> e = (Element) item.get();
+		Element<E> e = (Element<E>) item.get();
 		this.delete(item, true);
 		this.addHead(e.e);
 		
@@ -166,8 +167,9 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public void moveToTail(ListItem item) {
-		// TODO Auto-generated method stub
-		
+		Element<E> e = (Element<E>) item.get();
+		this.delete(item, true);
+		this.addTail(e.e);
 	}
 
 	@Override
@@ -184,7 +186,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public void reverse() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -214,7 +216,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public IListIterator<E> listIterator() {
-		// TODO Auto-generated method stub
+		return new DLinkedListIterator<E>();
 		return null;
 	}
 
