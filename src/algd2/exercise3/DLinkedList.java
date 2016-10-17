@@ -224,10 +224,25 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 		return null;
 	}
 
-	@Override
-	public E get(int arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public E get(int index) {
+		int i;
+		Element elem;
+		if(index <= size/2) {
+			i = 0;
+			elem = head;
+			while(i != index) {
+				elem = elem.next;
+				i++;
+			}
+		} else {
+			i = size;
+			elem = tail;
+			while(i != index) {
+				elem = elem.prev;
+				i--;
+			}
+		}
+		return (E) elem.e;
 	}
 
 	@Override
