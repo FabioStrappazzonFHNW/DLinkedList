@@ -28,20 +28,22 @@ public class ListItem<E> {
 		return null;
 	}
 
-	public void linkInAfter(DLinkedList<E>.Element<E> value) {
+	public ListItem<E> linkInAfter(DLinkedList<E>.Element<E> value) {
 		DLinkedList<E>.Element<E> next = element.next;
 		element.next = value;
 		value.next = next;
 		value.prev = element;
 		next.prev = value;
+		return new ListItem<E>(value);
 	}
 
-	public void linkInBefore(DLinkedList<E>.Element<E> value) {
+	public ListItem<E> linkInBefore(DLinkedList<E>.Element<E> value) {
 		DLinkedList<E>.Element<E> prev = element.prev;
 		element.prev = value;
 		value.prev = prev;
 		value.next = element;
 		prev.next = value;
+		return new ListItem<E>(value);
 	}
 
 	public E delete() {

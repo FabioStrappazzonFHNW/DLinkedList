@@ -149,7 +149,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 			Element<E> newE = new Element<>(data);
 			item.linkInAfter(newE);
 			size++;
-			return new ListItem(newE);
+			return new ListItem<E>(newE);
 		}
 	}
 
@@ -161,13 +161,13 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 			Element<E> newE = new Element<>(data);
 			item.linkInBefore(newE);
 			size++;
-			return new ListItem(newE);
+			return new ListItem<E>(newE);
 		}
 	}
 
 	@Override
 	public void moveToHead(ListItem item) {
-		Element<E> e = (Element) item.get();
+		Element<E> e = (Element<E>) item.get();
 		this.delete(item, true);
 		this.addHead(e.e);
 		
@@ -175,8 +175,9 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public void moveToTail(ListItem item) {
-		// TODO Auto-generated method stub
-		
+		Element<E> e = (Element<E>) item.get();
+		this.delete(item, true);
+		this.addTail(e.e);
 	}
 
 	@Override
@@ -239,8 +240,13 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public void reverse() {
-		// TODO Auto-generated method stub
-		
+		Element<E> current = head;
+		while(current != tail){
+			Element<E> tmp = current.next;
+			current.next = current.prev;
+			current.prev = tmp;
+			current = tmp;
+		}
 	}
 
 	@Override
@@ -257,8 +263,19 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public void conc(List<E> list, boolean after) {
-		// TODO Auto-generated method stub
-		
+		ListItem<E> item;
+		if(!after) {
+			item = new ListItem<E>(new Element<E>(list.remove(0)));
+		} else {
+			item = new ListItem<E>(tail);
+		}
+		for(E el : list) {
+			item = item.linkInAfter(new Element<E>(el));
+		}
+		if(!after) {
+			item.linkInAfter(head);
+		}
+		size += list.size();
 	}
 
 	@Override
@@ -269,27 +286,41 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public IListIterator<E> listIterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return new DLinkedListIterator<E>(new ListItem<E>(head), this);
 	}
 
 	@Override
 	public IListIterator<E> listIterator(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		return new DLinkedListIterator<E>(new ListItem<E>(getEl(index)), this);
 	}
 
-	@Override
-	public E get(int arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public E get(int index) {
+		return getEl(index).e;
+	}
+	
+	private Element<E> getEl(int index){
+		int i;
+		Element<E> elem;
+		if(index <= size/2) {
+			i = 0;
+			elem = head;
+			while(i != index) {
+				elem = elem.next;
+				i++;
+			}
+		} else {
+			i = size;
+			elem = tail;
+			while(i != index) {
+				elem = elem.prev;
+				i--;
+			}
+		}
+		return elem;
 	}
 
 	@Override
 	public int size() {
 		return size;
 	}
-
-	
-
 }
