@@ -1,6 +1,5 @@
 package algd2.exercise3;
 
-import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 public class DLinkedListIterator<E> implements IListIterator<E> {
@@ -15,7 +14,7 @@ public class DLinkedListIterator<E> implements IListIterator<E> {
 
 	@Override
 	public void add(E value) {
-		item.linkInAfter(list.new Element<E>(value));
+		list.addAfter(item, value);
 	}
 
 	@Override
@@ -54,7 +53,7 @@ public class DLinkedListIterator<E> implements IListIterator<E> {
 
 	@Override
 	public void remove() {
-		item.delete();
+		list.remove(item);
 		
 	}
 
