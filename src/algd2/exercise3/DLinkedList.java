@@ -58,16 +58,38 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public ListItem<E> delete(ListItem item, boolean next) {
-		if (! checkMembership(item)) throw new IllegalArgumentException();
-		// TODO Auto-generated method stub
-		return null;
+		if (item.get() == head) {
+			head = (Element<E>) item.getPrevious().get();
+		} else if (item.get() == tail) {
+		 	tail = (Element<E>) item.getNext().get();
+		}
+		ListItem value;
+		if (next) {
+			value = item.getNext();
+		} else {
+			value = item.getPrevious();
+		}
+		item.delete();
+		size--;
+		return value;
 	}
 
 	@Override
 	public ListItem<E> cyclicDelete(ListItem item, boolean next) {
-		if (! checkMembership(item)) throw new IllegalArgumentException();
-		// TODO Auto-generated method stub
-		return null;
+		if (item.get() == head) {
+			head = (Element<E>) item.getPrevious().get();
+		} else if (item.get() == tail) {
+			tail = (Element<E>) item.getNext().get();
+		}
+		ListItem value;
+		if (next) {
+			value = cyclicNext(item);
+		} else {
+			value = cyclicPrevious(item);
+		}
+		item.delete();
+		size--;
+		return value;
 	}
 
 	@Override
@@ -82,7 +104,6 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public E remove(ListItem item) {
-		
 		size--;
 		return (E) item.delete();
 	}
@@ -114,7 +135,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 	@Override
 	public ListItem<E> addAfter(ListItem item, E data) {
 		if (item.getNext() == null) {
-			return addTail(data);
+			return addHead(data);
 		} else {
 			Element<E> newE = new Element<>(data);
 			item.linkInAfter(newE);
@@ -125,7 +146,6 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public ListItem<E> addBefore(ListItem item, E data) {
-		if (! checkMembership(item)) throw new IllegalArgumentException();
 		if (item.getPrevious() == null) {
 			return addTail(data);
 		} else {
