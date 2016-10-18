@@ -287,25 +287,27 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public void addAfter(ListItem item, List<E> list) {
+		int addSize = list.size();
 		if(item == null){
 			item = new ListItem<E>(tail);
 		}
 		for(E el = list.remove(0); !list.isEmpty(); el = list.remove(0)) {
 			item = item.linkInAfter(new Element<E>(el));
 		}
-		size += list.size();
+		size += addSize;
 		modCount++;
 	}
 
 	@Override
 	public void addBefore(ListItem item, List<E> list) {
+		int addSize = list.size();
 		if(item == null){
 			item = new ListItem<E>(head);
 		}
 		for(E el = list.remove(0); !list.isEmpty(); el = list.remove(0)) {
 			item.linkInBefore(new Element<E>(el));
 		}
-		size += list.size();
+		size += addSize;
 		modCount++;
 	}
 
