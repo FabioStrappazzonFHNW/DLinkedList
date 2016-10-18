@@ -134,10 +134,13 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 	@Override
 	public ListItem<E> addHead(E data) {
 		Element<E> newE = new Element<>(data);
-		newE.next = head;
-		head = newE;
 		if (size == 0) {
 			tail = newE;
+			head = newE;
+		} else {
+			newE.next = head;
+			head.prev = newE;
+			head = newE;
 		}
 		size++;
 		modCount++;
@@ -147,10 +150,13 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 	@Override
 	public ListItem<E> addTail(E data) {
 		Element<E> newE = new Element<>(data);
-		newE.prev = tail;
-		tail = newE;
 		if (size == 0) {
+			tail = newE;
 			head = newE;
+		} else {
+			newE.prev = tail;
+			tail.next = newE;
+			tail = newE;
 		}
 		size++;
 		modCount++;
@@ -159,7 +165,8 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public ListItem<E> addAfter(ListItem item, E data) {
-		if (item.get() == head) {
+		if (item == null) return addHead(data);
+		if (item.getPrevious() == null) {
 			return addHead(data);
 		} else {
 			Element<E> newE = new Element<>(data);
@@ -172,7 +179,8 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public ListItem<E> addBefore(ListItem item, E data) {
-		if (item.get() == tail) {
+		if (item == null) return addTail(data);
+		if (item.getPrevious() == null) {
 			return addTail(data);
 		} else {
 			Element<E> newE = new Element<>(data);
