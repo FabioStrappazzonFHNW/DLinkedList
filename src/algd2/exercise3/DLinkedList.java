@@ -111,6 +111,16 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 		return (E) item.delete();
 	}
 	
+	@Override
+	public E remove(int index){
+		if(index<0 || index>= size){
+			throw new IndexOutOfBoundsException();
+		}
+		Element<E> el = getEl(index);
+		size--;
+		return new ListItem<E>(el).delete();
+	}
+	
 	@Override 
 	public boolean add(E data){
 		addTail(data);
