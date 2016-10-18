@@ -225,54 +225,9 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public void swap(ListItem item1, ListItem item2) {
-		Element<E> e1 = (Element<E>) item1.element;
-		Element<E> e2 = (Element<E>) item2.element;
-
-		Element<E> prev1 = e1.prev;
-		Element<E> next1 = e1.next;
-		Element<E> prev2 = e2.prev;
-		Element<E> next2 = e2.next;
-
-		if (e1 == head) {
-			head = e2;
-		} else if (e1== tail) {
-			tail = e2;
-		}
-		if (e2 == head) {
-			head = e1;
-		} else if (e2 == tail) {
-			tail = e1;
-		}
-
-		if (e1.next == e2) {
-			e2.prev = prev1;
-			e2.next = e1;
-			e1.prev = e2;
-			e1.next = next2;
-		} else if (e1.prev == e2) {
-			e1.prev = prev2;
-			e1.next = e2;
-			e2.prev = e1;
-			e2.next = next1;
-		} else {
-			e1.prev = prev2;
-			e1.next = next2;
-			e2.prev = prev1;
-			e2.next = next1;
-		}
-
-		if (prev1 != null && prev1 != e2) {
-			prev1.next = e2;
-		}
-		if (next1 != null && next1 != e2) {
-			next1.prev = e2;
-		}
-		if (prev2 != null && prev2 != e1) {
-			prev2.next = e1;
-		}
-		if (next2 != null && prev2 != e1) {
-			next2.prev = e1;
-		}
+		E tmp = (E) item1.get();
+		item1.element.e= item2.get();
+		item2.element.e= tmp;
 		modCount++;
 	}
 
@@ -285,6 +240,13 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 			current.prev = tmp;
 			current = tmp;
 		}
+		Element<E> tmp = current.next;
+		current.next = current.prev;
+		current.prev = tmp;
+		current = tmp;
+		tmp = head;
+		head = tail;
+		tail = tmp;
 		modCount++;
 	}
 
