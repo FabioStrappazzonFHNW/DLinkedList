@@ -228,6 +228,9 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 		E tmp = (E) item1.get();
 		item1.element.e= item2.get();
 		item2.element.e= tmp;
+		Element<E> el = item1.element;
+		item1.element = item2.element;
+		item2.element = el;
 		modCount++;
 	}
 
@@ -240,8 +243,8 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 				!item1.equals(item2) &&
 				!item2.equals(item1.getPrevious())){
 			swap(item1, item2);
-			item1 = item1.getNext();
-			item2 = item2.getPrevious();
+			item1 = item2.getNext();
+			item2 = item1.getPrevious();
 		}
 		modCount++;
 	}
