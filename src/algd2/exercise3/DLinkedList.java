@@ -233,20 +233,16 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public void reverse() {
-		Element<E> current = head;
-		while(current != tail){
-			Element<E> tmp = current.next;
-			current.next = current.prev;
-			current.prev = tmp;
-			current = tmp;
+		ListItem<E> item1 = head();
+		ListItem<E> item2 = tail();
+		while (item1 != null &&
+				item2 != null &&
+				!item1.equals(item2) &&
+				!item2.equals(item1.getPrevious())){
+			swap(item1, item2);
+			item1 = item1.getNext();
+			item2 = item2.getPrevious();
 		}
-		Element<E> tmp = current.next;
-		current.next = current.prev;
-		current.prev = tmp;
-		current = tmp;
-		tmp = head;
-		head = tail;
-		tail = tmp;
 		modCount++;
 	}
 
