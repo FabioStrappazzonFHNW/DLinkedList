@@ -177,17 +177,17 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public void moveToHead(ListItem item) {
-		Element<E> e = (Element<E>) item.get();
+		E e = (E) item.get();
 		this.delete(item, true);
-		this.addHead(e.e);
+		this.addHead(e);
 		
 	}
 
 	@Override
 	public void moveToTail(ListItem item) {
-		Element<E> e = (Element<E>) item.get();
+		E e = (E) item.get();
 		this.delete(item, true);
-		this.addTail(e.e);
+		this.addTail(e);
 	}
 
 	@Override
@@ -267,7 +267,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 	@Override
 	public void addAfter(ListItem item, List<E> list) {
 		for(E el = list.remove(0); !list.isEmpty(); el = list.remove(0)) {
-			item.linkInAfter(new Element<E>(el));
+			item = item.linkInAfter(new Element<E>(el));
 		}
 		size += list.size();
 	}
@@ -322,6 +322,9 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 	}
 	
 	private Element<E> getEl(int index){
+		if(index <0 || index >= size){
+			throw new IndexOutOfBoundsException();
+		}
 		int i;
 		Element<E> elem;
 		if(index <= size/2) {
