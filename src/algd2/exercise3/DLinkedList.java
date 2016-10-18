@@ -183,7 +183,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 	@Override
 	public void rotate(ListItem item) {
 		Element<E> segment = head;
-		ListItem<E> oldTail = tail;
+		ListItem<E> oldTail = new ListItem<E>(tail);
 		head = item.element;
 		tail = head.prev;
 		head.prev = null;

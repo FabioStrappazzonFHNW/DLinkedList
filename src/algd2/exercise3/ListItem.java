@@ -1,7 +1,7 @@
 package algd2.exercise3;
 
 public class ListItem<E> {
-	private DLinkedList<E>.Element<E> element;
+	protected DLinkedList<E>.Element<E> element;
 	
 	public ListItem(DLinkedList<E>.Element<E> e){
 		element = e;
