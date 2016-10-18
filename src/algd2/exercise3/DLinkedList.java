@@ -314,7 +314,9 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 		ListItem<E> item;
 		size += list.size();
 		if(!after) {
-			item =new ListItem<E>(new Element<E>(list.remove(0)));
+			Element<E> e = new Element<E>(list.remove(0));
+			item =new ListItem<E>(e);
+			head = e;
 		} else {
 			item = new ListItem<E>(tail);
 		}
@@ -323,6 +325,8 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 		}
 		if(!after) {
 			item.linkInAfter(head);
+		}else{
+			tail = item.element;
 		}
 		modCount++;
 	}
