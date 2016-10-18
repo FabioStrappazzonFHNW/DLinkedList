@@ -233,12 +233,17 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 		Element<E> prev2 = e2.prev;
 		Element<E> next2 = e2.next;
 
-		if (e1 == head) {
+		if (e1 == head && e2 == tail) {
 			head = e2;
-		} else if (e1== tail) {
+			tail = e1;
+		} else if (e2 == head && e1 == tail) {
+			head = e1;
 			tail = e2;
-		}
-		if (e2 == head) {
+		} else if (e1 == head) {
+			head = e2;
+		} else if (e1 == tail) {
+			tail = e2;
+		} else if (e2 == head) {
 			head = e1;
 		} else if (e2 == tail) {
 			tail = e1;
@@ -273,17 +278,18 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 		if (next2 != null && prev2 != e1) {
 			next2.prev = e1;
 		}
+
 		modCount++;
 	}
 
 	@Override
 	public void reverse() {
-		Element<E> current = head;
-		while(current != tail){
-			Element<E> tmp = current.next;
-			current.next = current.prev;
-			current.prev = tmp;
-			current = tmp;
+		ListItem<E> item1 = head();
+		ListItem<E> item2 = tail();
+		while (!item1.equals(item2) && !item1.getPrevious().equals(item2)) {
+			swap(item1, item2);
+			item1 = item2.getNext();
+			item2 = item1.getPrevious();
 		}
 		modCount++;
 	}

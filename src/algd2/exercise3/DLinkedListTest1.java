@@ -12,7 +12,11 @@ import org.junit.Test;
 import algd2.Clock;
 
 public class DLinkedListTest1 {
-	private final int Size = 10000000;
+//	private final int Size = 10000000;
+	private final int Size = 1000
+
+
+	00;
 	private IList<Integer> list1;
 	private List<Integer> list2;
 	
@@ -77,7 +81,7 @@ public class DLinkedListTest1 {
 		Clock clock = new Clock();
 		final ListItem tail = list1.tail();
 		ListItem it = list1.head();
-		while(it != tail) {
+		while(it.equals(tail)) {
 			int i = list1.get(it);
 			it = list1.cyclicNext(it);
 		}
