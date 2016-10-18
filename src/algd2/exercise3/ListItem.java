@@ -33,7 +33,8 @@ public class ListItem<E> {
 		element.next = value;
 		value.next = next;
 		value.prev = element;
-		next.prev = value;
+		if (next != null)
+			next.prev = value;
 		return new ListItem<E>(value);
 	}
 
@@ -42,7 +43,8 @@ public class ListItem<E> {
 		element.prev = value;
 		value.prev = prev;
 		value.next = element;
-		prev.next = value;
+		if (prev != null)
+			prev.next = value;
 		return new ListItem<E>(value);
 	}
 
