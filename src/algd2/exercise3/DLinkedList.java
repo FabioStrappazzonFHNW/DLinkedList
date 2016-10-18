@@ -71,6 +71,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 		}
 		item.delete();
 		size--;
+		modCount++;
 		return value;
 	}
 
@@ -88,6 +89,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 			value = cyclicPrevious(item);
 		}
 		item.delete();
+		modCount++;
 		if (--size > 0) {
 			return value;
 		} else {
@@ -108,6 +110,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 	@Override
 	public E remove(ListItem item) {
 		size--;
+		modCount++;
 		return (E) item.delete();
 	}
 	
@@ -118,6 +121,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 		}
 		Element<E> el = getEl(index);
 		size--;
+		modCount++;
 		return new ListItem<E>(el).delete();
 	}
 	
@@ -136,6 +140,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 			tail = newE;
 		}
 		size++;
+		modCount++;
 		return new ListItem<E>(head);
 	}
 
@@ -148,6 +153,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 			head = newE;
 		}
 		size++;
+		modCount++;
 		return new ListItem<E>(tail);
 	}
 
@@ -159,6 +165,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 			Element<E> newE = new Element<>(data);
 			item.linkInAfter(newE);
 			size++;
+			modCount++;
 			return new ListItem<E>(newE);
 		}
 	}
@@ -171,6 +178,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 			Element<E> newE = new Element<>(data);
 			item.linkInBefore(newE);
 			size++;
+			modCount++;
 			return new ListItem<E>(newE);
 		}
 	}
@@ -192,13 +200,16 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public void rotate(ListItem item) {
-		Element<E> segment = head;
-		ListItem<E> oldTail = new ListItem<E>(tail);
-		head = item.element;
-		tail = head.prev;
-		head.prev = null;
-		tail.next = null;
-		oldTail.linkInAfter(segment);
+		if(item.element != head){
+			Element<E> segment = head;
+			ListItem<E> oldTail = new ListItem<E>(tail);
+			head = item.element;
+			tail = head.prev;
+			head.prev = null;
+			tail.next = null;
+			oldTail.linkInAfter(segment);
+			modCount++;
+		}
 	}
 
 	@Override
@@ -251,6 +262,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 		if (next2 != null && prev2 != e1) {
 			next2.prev = e1;
 		}
+		modCount++;
 	}
 
 	@Override
@@ -262,6 +274,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 			current.prev = tmp;
 			current = tmp;
 		}
+		modCount++;
 	}
 
 	@Override
@@ -270,6 +283,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 			item = item.linkInAfter(new Element<E>(el));
 		}
 		size += list.size();
+		modCount++;
 	}
 
 	@Override
@@ -278,6 +292,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 			item.linkInBefore(new Element<E>(el));
 		}
 		size += list.size();
+		modCount++;
 	}
 
 	@Override
@@ -295,6 +310,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 			item.linkInAfter(head);
 		}
 		size += list.size();
+		modCount++;
 	}
 
 	@Override
@@ -304,6 +320,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 			l.addTail((E)startInclusive.get());
 			startInclusive = delete(startInclusive, true);
 		}
+		modCount++;
 		return l;
 	}
 
@@ -335,7 +352,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 				i++;
 			}
 		} else {
-			i = size;
+			i = size-1;
 			elem = tail;
 			while(i != index) {
 				elem = elem.prev;

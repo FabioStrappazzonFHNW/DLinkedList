@@ -16,13 +16,13 @@ public class ListItem<E> {
 	}
 
 	public ListItem<E> getNext(){
-		if(element.next != null){
+		if(element != null && element.next != null){
 			return new ListItem<E>(element.next);
 		}
 		return null;
 	}
 	public ListItem<E> getPrevious(){
-		if(element.prev != null){
+		if(element != null && element.prev != null){
 			return new ListItem<E>(element.prev);
 		}
 		return null;
