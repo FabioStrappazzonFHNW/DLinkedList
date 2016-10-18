@@ -222,8 +222,8 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 
 	@Override
 	public void swap(ListItem item1, ListItem item2) {
-		Element<E> e1 = (Element<E>) item1.get();
-		Element<E> e2 = (Element<E>) item2.get();
+		Element<E> e1 = (Element<E>) item1.element;
+		Element<E> e2 = (Element<E>) item2.element;
 
 		Element<E> prev1 = e1.prev;
 		Element<E> next1 = e1.next;
