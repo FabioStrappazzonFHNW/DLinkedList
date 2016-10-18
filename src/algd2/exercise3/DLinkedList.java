@@ -183,7 +183,12 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 	@Override
 	public void rotate(ListItem item) {
 		Element<E> segment = head;
-		head = item.get();
+		ListItem<E> oldTail = tail;
+		head = item.element;
+		tail = head.prev;
+		head.prev = null;
+		tail.next = null;
+		oldTail.linkInAfter(segment);
 	}
 
 	@Override
@@ -273,7 +278,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 		} else {
 			item = new ListItem<E>(tail);
 		}
-		for(Element<E> el = list.remove(0); !list.isEmpty(); el = list.remove(0)) {
+		for(E el = list.remove(0); !list.isEmpty(); el = list.remove(0)) {
 			item = item.linkInAfter(new Element<E>(el));
 		}
 		if(!after) {
