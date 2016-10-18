@@ -130,10 +130,13 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 	@Override
 	public ListItem<E> addHead(E data) {
 		Element<E> newE = new Element<>(data);
-		newE.next = head;
-		head = newE;
 		if (size == 0) {
 			tail = newE;
+			head = newE;
+		} else {
+			newE.next = head;
+			head.prev = newE;
+			head = newE;
 		}
 		size++;
 		return new ListItem<E>(head);
@@ -142,10 +145,13 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 	@Override
 	public ListItem<E> addTail(E data) {
 		Element<E> newE = new Element<>(data);
-		newE.prev = tail;
-		tail = newE;
 		if (size == 0) {
+			tail = newE;
 			head = newE;
+		} else {
+			newE.prev = tail;
+			tail.next = newE;
+			tail = newE;
 		}
 		size++;
 		return new ListItem<E>(tail);
