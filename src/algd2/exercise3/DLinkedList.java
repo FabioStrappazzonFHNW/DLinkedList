@@ -314,8 +314,9 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 	@Override
 	public void conc(List<E> list, boolean after) {
 		ListItem<E> item;
+		size += list.size();
 		if(!after) {
-			item = new ListItem<E>(new Element<E>(list.remove(0)));
+			item =new ListItem<E>(new Element<E>(list.remove(0)));
 		} else {
 			item = new ListItem<E>(tail);
 		}
@@ -325,16 +326,16 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 		if(!after) {
 			item.linkInAfter(head);
 		}
-		size += list.size();
 		modCount++;
 	}
 
 	@Override
 	public IList<E> remove(ListItem startInclusive, ListItem endExclusive) {
 		DLinkedList<E> l = new DLinkedList<>();
-		while(!startInclusive.equals(endExclusive)&&startInclusive != null){
+		while(startInclusive != null && !startInclusive.equals(endExclusive)){
 			l.addTail((E)startInclusive.get());
 			startInclusive = delete(startInclusive, true);
+			size--;
 		}
 		modCount++;
 		return l;
