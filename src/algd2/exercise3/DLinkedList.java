@@ -23,7 +23,7 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 		for(Element<E> current = head; current != tail; current= current.next)
 			if(item.get() == current)
 				return true;
-		return false;
+		return item.get() == tail;
 	}
 
 	@Override
