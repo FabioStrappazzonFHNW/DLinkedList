@@ -21,9 +21,9 @@ public class DLinkedList<E> extends AbstractList<E> implements IList<E> {
 	@Override
 	public boolean checkMembership(ListItem item) {
 		for(Element<E> current = head; current != tail; current= current.next)
-			if(item.get() == current)
+			if(item.get() == current.e)
 				return true;
-		return item.get() == tail;
+		return item.get() == tail.e;
 	}
 
 	@Override
